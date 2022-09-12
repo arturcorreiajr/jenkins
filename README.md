@@ -8,8 +8,10 @@ docker exec -it -u root d3cc4f5c9056 bash
 chmod 777 /var/run/docker.sock
 ```
 
-### Instalar plugin docker
-### Instalar plugin Nodejs
+#### Instalar plugin docker
+#### Instalar plugin Nodejs
+#### Instalar plugin Kubernetes e Kubernetes CLI
+
 Ir em 
 ´´´Manage jenkins´´´ 
 Selecionar Nodejs 16.16.0,  e em 
