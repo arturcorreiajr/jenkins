@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    image: jenkinsci/blueocean
+    image: jenkinsci/blueocean:latest
     ports:
       - '8084:8080'
     volumes:
