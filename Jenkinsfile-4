@@ -1,0 +1,84 @@
+node {
+    try {
+        currentBuild.description = "PIPELINE START: ${project_name}:${branch}"
+            def k8s_deployment_file = "*-${environment}.y*mI"
+            def k8s_ingress_file = "**/*-service-ingress-hpa-${environment}.y*mI"
+            def k8s_vs_file = "**/*virtualservice*"
+            def k8s_custom files = "*/-custom.y*mI"
+            def environment =
+            "Senvironment?
+            def build = true
+            def folder_monitoring_local = "/opt/jenkins/workspace/${project_name}-${branch}/"
+
+            stage ("Checkout"){
+                git credentialsId: "ec3e4c5d-cbf6-4309-b092-dcd27d31cb79", branch: "$ (branch)", url: "${git_url)"
+                env.VERSION = shreturnStdout: true, script: git log -n 1 --pretty=format: %).trim
+            }
+
+        //dir(default)
+        //git credentialsId: "ec3e4c5d-cbf6-4309-b092-dcd27d31cb79", branch: "master"', url: "${git_url}"
+        //verificacao = sh (script: dif /monitoring/.tf /default/monitoring/.tf '
+
+
+        stage ( "Checkout Monitoring"){
+        echo folder monitoring local
+        def folder_monitoring = sh (script: "find monitoring" ‚returnStdout: true)
+        def array_monitoring-[]
+        folder monitoring.split.each
+        array_monitoring <<it
+        print array_monitoring[e]
+        print array monitoring.size ()
+        echo "variavel folder_monitoring: ${folder _monitoring)"
+        if (array monitoring[0] == "monitoring"){
+        echo "Existe a pasta Monitoring"
+        if (array monitoring.size()>1){
+        echo "Existem modulos dentro da pasta de Monitoring' array monitoring[0]="" print array_ monitoring
+
+        }else{
+        echo "Não existe a pasta Monitoring™
+        stage ( "Build"){
+        currentBuild.description = "BUILDING...
+        sh "gradle --version"
+        sh "gradle clean build -- info"
+        stage ("Build Docker Image") {
+
+
+stage ("Build Docker Image") {
+docker .withRegistry("https: / /493010814028.dkr.ecr.sa-east-1.amazonaws.com",
+docker.build ("$ {project _name}
+-build-arg environment="
+"ecr: sa-east -1 :aws creds PRD") {
+environment. toLowerCase
+stage ("Upload image to ECR") {
+currentBuild.description = "UPLOAD IMG: ${VERSION?"
+docker .withRegistry ("https: / /493010814028 .dkr.ecr.sa-east-1.amazonaws.com", "ecr:sa-east-1:aws_creds_PRD™){
+docker. image ("$ {project_name}") .push ("$ {VERSION} ")
+stage ( "Deploy on K85") {
+currentBuild.description = "DEPLOY ${k8s deployment file'"
+dir ("k8sconfig"){
+kubernetesDeploy (
+kubeconfigId: "kubeconfig cluster_ $environment".
+configs: k8s _deployment_file, enableConfigSubstitution: true, secretNamespace: "default"
+)
+//Using kubernetes CLI to deploy unsupported resources on K8S CD Plugin (ex.hpa)
+withKubeConfig([credentialsId:"k8sconfig_cluster_$environment"]){
+//Checking existence of svc/ingress files
+def ingress files = findfiles glob: k8s ingress file
+if(ingress_files. length > 0){
+for(file in ingress _files){
+sh "kubectl apply
+file.path
+//Checking existence of virtualservice files
+def vs_files = findFiles glob: k85_vs_file
+if(vs files. length › 0){
+for(file in vs files){
+sh
+"kubectl apply
+file.path
+//Checking existence of custom files (svcmonitors, alertmanager rules, etc)
+def custom files = findfiles glob: k8s custom files
+if(custom_files. length > 0){
+for(file in custom files){
+sh "kubecti apply -f" + file.path
+}
+}
